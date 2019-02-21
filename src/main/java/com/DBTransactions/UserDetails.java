@@ -6,6 +6,14 @@ public class UserDetails {
 	String emailID;
 	String age;
 	String sex;
+	String password;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getName() {
 		return name;
@@ -47,13 +55,16 @@ public class UserDetails {
 		this.sex = sex;
 	}
 
-	public UserDetails(String name, String phoneNumber, String emailID, String age, String sex) {
+	public UserDetails(String name, String phoneNumber, String emailID, String age, String sex, String password) {
 		super();
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.emailID = emailID;
 		this.age = age;
 		this.sex = sex;
+		this.password = password;
 	}
+
+	
 
 }

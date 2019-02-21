@@ -1,5 +1,6 @@
 package com.DBTransactions;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
@@ -12,6 +13,8 @@ import org.bson.Document;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -81,4 +84,38 @@ public class Find {
 		}
 	}
 
+	public Response findInDBEmailIDAndPassword(LoginInput li, MongoClient mongoClient) {
+		Response res = new Response();
+		try {
+
+			MongoDatabase database = mongoClient.getDatabase("myNewDB");
+			MongoCollection<Document> collection = database.getCollection("sampleCollection");
+			System.out.println("Collection sampleCollection selected successfully");
+			BasicDBObject query = new BasicDBObject();
+			
+			query.put("emailID", li.getEmailID());
+			query.put("password", li.getPassword());
+			
+			FindIterable<Document> iterDoc = collection.find( query);
+
+			// Getting the iterator
+			Iterator it = iterDoc.iterator();
+
+			if (it.hasNext()) {
+				System.out.println( li.emailID+ " User Valid");
+				res.setResponseCode("200");
+				res.setResponseMessage("ValidateSuccessfull");
+			} else {
+				System.out.println( li.emailID + " User Invailde");
+				res.setResponseCode("105");
+				res.setResponseMessage("ValidateUnsuccessfull");
+			}
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("InternalError");
+			return res;
+		}
+	}
 }

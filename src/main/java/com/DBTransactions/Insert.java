@@ -26,7 +26,7 @@ public class Insert {
 
 			Document document = new Document("name", userDetails.name).append("sex", userDetails.sex)
 					.append("phoneNumber", userDetails.phoneNumber).append("emailID", userDetails.emailID)
-					.append("age", userDetails.age).append("status", "Pending");
+					.append("age", userDetails.age).append("status", "Pending").append("password", userDetails.password);
 			collection.insertOne(document);
 			System.out.println("Document inserted successfully");
 			res.setResponseCode("200");
