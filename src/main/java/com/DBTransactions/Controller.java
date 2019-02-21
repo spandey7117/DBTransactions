@@ -100,5 +100,31 @@ public class Controller {
 			return res;
 		}
 	}
-	
+	@RequestMapping("/UpdateAll")
+	public Response updateAll(@RequestParam(value = "phoneNumber") String phoneNumber,
+			@RequestParam(value = "name") String name, @RequestParam(value = "emailID") String emailID,
+			@RequestParam(value = "sex") String sex, @RequestParam(value = "age") String age) {
+		Response res = new Response();
+		try {
+
+			MongoClient mongoClient = cm.createConnection();
+			UserDetails userDetails = new UserDetails(name, phoneNumber, emailID, age, sex,"password");
+			res = up.updateAllByemailID(userDetails, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200")) {
+				System.out.println("Password updated Succesfully");
+			}
+			else
+			{
+				System.out.println("Password Not Updated Validated ");
+			}
+			return res;
+		} catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			return res;
+		}
+	}
 }
