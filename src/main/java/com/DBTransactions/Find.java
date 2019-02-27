@@ -118,4 +118,47 @@ public class Find {
 			return res;
 		}
 	}
+	
+	public Response findInDBEmailIDAndPasswordActive(LoginInput li, MongoClient mongoClient) {
+		Response res = new Response();
+		try {
+
+			MongoDatabase database = mongoClient.getDatabase("myNewDB");
+			MongoCollection<Document> collection = database.getCollection("sampleCollection");
+			System.out.println("Collection sampleCollection selected successfully");
+			BasicDBObject query = new BasicDBObject();
+			
+			query.put("emailID", li.getEmailID());
+			query.put("password", li.getPassword());
+
+			
+			FindIterable<Document> iterDoc = collection.find( query);
+
+			// Getting the iterator
+			Iterator it = iterDoc.iterator();
+
+			if (it.hasNext()) {
+				if(it.next().toString().contains("Active")) {
+				System.out.println( li.emailID+ " User Valid");
+				res.setResponseCode("200");
+				res.setResponseMessage("ValidateSuccessfull");}
+				else
+				{
+					System.out.println( li.emailID+ " User Valid");
+					res.setResponseCode("500");
+					res.setResponseMessage("IDNotValid");
+				}
+			} else {
+				System.out.println( li.emailID + " User Invailde");
+				res.setResponseCode("105");
+				res.setResponseMessage("ValidateUnsuccessfull");
+			}
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("InternalError");
+			return res;
+		}
+	}
 }

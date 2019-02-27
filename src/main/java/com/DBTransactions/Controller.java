@@ -55,7 +55,8 @@ public class Controller {
 
 			MongoClient mongoClient = cm.createConnection();
 		LoginInput li = new LoginInput(emailID, password);
-			res = find.findInDBEmailIDAndPassword(li, mongoClient);
+			//res = find.findInDBEmailIDAndPassword(li, mongoClient);
+		res = find.findInDBEmailIDAndPasswordActive(li, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
 			if (res.getResponseCode().equals("200")) {
 				System.out.println("User Validated Succesfully");
@@ -117,6 +118,32 @@ public class Controller {
 			else
 			{
 				System.out.println("Password Not Updated Validated ");
+			}
+			return res;
+		} catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			return res;
+		}
+	}
+	
+	@RequestMapping("/UpdateStatus")
+	public Response updateStatus(@RequestParam(value = "emailID") String emailID) {
+		Response res = new Response();
+		try {
+
+			MongoClient mongoClient = cm.createConnection();
+			OTPUpdateInput oTPUpdateInput = new OTPUpdateInput(emailID);
+			res = up.updateStatusByemailID(oTPUpdateInput, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200")) {
+				System.out.println("Status updated Succesfully");
+			}
+			else
+			{
+				System.out.println("Status Not Updated ");
 			}
 			return res;
 		} catch (Exception e) {
