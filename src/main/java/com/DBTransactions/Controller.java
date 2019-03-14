@@ -4,7 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.google.common.geometry.S2LatLng;
+import com.google.common.geometry.S2Point;
 import com.mongodb.MongoClient;
 
 @RestController
@@ -16,7 +17,7 @@ public class Controller {
 
 	@RequestMapping("/InsertDataEntry")
 	public Response userDetailsEntry(@RequestParam(value = "phoneNumber") String phoneNumber,
-			@RequestParam(value = "name") String name, @RequestParam(value = "emailID") String emailID,
+			@RequestParam(value = "name", defaultValue = "shbham") String name, @RequestParam(value = "emailID") String emailID,
 			@RequestParam(value = "sex") String sex, @RequestParam(value = "age") String age, @RequestParam(value = "password") String password) {
 		Response res = new Response();
 		try {
@@ -154,4 +155,40 @@ public class Controller {
 			return res;
 		}
 	}
+	
+	@RequestMapping("/InsertLocData")
+	public Response userDetailsEntry(@RequestParam(value = "startLat") String startLat,
+			@RequestParam(value = "endLat" ) String endLat, @RequestParam(value = "endLong") String endLong,@RequestParam(value = "startLong") String startLong, @RequestParam(value = "id") String id) 
+			 {
+		Response res = new Response();
+		try {
+
+			MongoClient mongoClient = cm.createConnection();
+			S2Point startPoint = S2LatLng.fromDegrees(Double.parseDouble(startLat), Double.parseDouble(startLong)).toPoint();
+			S2Point endPoint = S2LatLng.fromDegrees(Double.parseDouble(endLat), Double.parseDouble(endLong)).toPoint();
+			UserDetailWithLocation userDetails = new UserDetailWithLocation(startPoint, endPoint, id, "Pending", Double.parseDouble(startLong), Double.parseDouble(startLat), Double.parseDouble(endLong), Double.parseDouble(endLat));
+			res = ins.insertInMongoDetailsLoc(userDetails, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200"))
+						
+					{
+						System.out.println("Inserted Susscessfully");
+			
+			return res;
+		}
+		}catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			return res;
+		}
+		
+		
+		
+		
+		return res;
+		
+}
+	
 }
