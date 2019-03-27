@@ -11,4 +11,5 @@ public class ConnectionManager {
 		System.out.println("Connected Successfully");
 		return mongoClient;
 	}
+
 }

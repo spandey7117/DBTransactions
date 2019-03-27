@@ -44,6 +44,7 @@ public class Find {
 				res.setResponseCode("1001");
 				res.setResponseMessage("NumberDoesNotExistsInDB");
 			}
+			
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,6 +76,7 @@ public class Find {
 				res.setResponseCode("1002");
 				res.setResponseMessage("emailIDDoesNotExistsInDB");
 			}
+			
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,6 +112,7 @@ public class Find {
 				res.setResponseCode("105");
 				res.setResponseMessage("ValidateUnsuccessfull");
 			}
+		
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -153,6 +156,7 @@ public class Find {
 				res.setResponseCode("105");
 				res.setResponseMessage("ValidateUnsuccessfull");
 			}
+			
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();

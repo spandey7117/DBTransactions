@@ -20,9 +20,10 @@ public class Controller {
 			@RequestParam(value = "name", defaultValue = "shbham") String name, @RequestParam(value = "emailID") String emailID,
 			@RequestParam(value = "sex") String sex, @RequestParam(value = "age") String age, @RequestParam(value = "password") String password) {
 		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
 		try {
 
-			MongoClient mongoClient = cm.createConnection();
+		
 			UserDetails userDetails = new UserDetails(name, phoneNumber, emailID, age, sex,password);
 			res = find.findInDBPhoneNumber(userDetails, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
@@ -39,12 +40,15 @@ public class Controller {
 					}
 				}
 			}
+			
+			mongoClient.close();
 			return res;
 		} catch (Exception e) {
 			System.out.println("Error In controller");
 			e.printStackTrace();
 			res.setResponseCode("0");
 			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
 			return res;
 		}
 	}
@@ -52,9 +56,10 @@ public class Controller {
 	public Response login( @RequestParam(value = "emailID") String emailID,
 			 @RequestParam(value = "password") String password) {
 		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
 		try {
 
-			MongoClient mongoClient = cm.createConnection();
+			
 		LoginInput li = new LoginInput(emailID, password);
 			//res = find.findInDBEmailIDAndPassword(li, mongoClient);
 		res = find.findInDBEmailIDAndPasswordActive(li, mongoClient);
@@ -66,12 +71,14 @@ public class Controller {
 			{
 				System.out.println("User Not Validated ");
 			}
+			mongoClient.close();
 			return res;
 		} catch (Exception e) {
 			System.out.println("Error In controller");
 			e.printStackTrace();
 			res.setResponseCode("0");
 			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
 			return res;
 		}
 	}
@@ -80,9 +87,10 @@ public class Controller {
 	public Response updatePassword( @RequestParam(value = "emailID") String emailID,
 			 @RequestParam(value = "password") String password) {
 		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
 		try {
 
-			MongoClient mongoClient = cm.createConnection();
+			
 		LoginInput li = new LoginInput(emailID, password);
 			res = up.updatePasswordByemailID(li, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
@@ -93,12 +101,14 @@ public class Controller {
 			{
 				System.out.println("Password Not Updated Validated ");
 			}
+			mongoClient.close();
 			return res;
 		} catch (Exception e) {
 			System.out.println("Error In controller");
 			e.printStackTrace();
 			res.setResponseCode("0");
 			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
 			return res;
 		}
 	}
@@ -107,9 +117,11 @@ public class Controller {
 			@RequestParam(value = "name") String name, @RequestParam(value = "emailID") String emailID,
 			@RequestParam(value = "sex") String sex, @RequestParam(value = "age") String age) {
 		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
 		try {
 
-			MongoClient mongoClient = cm.createConnection();
+			
+
 			UserDetails userDetails = new UserDetails(name, phoneNumber, emailID, age, sex,"password");
 			res = up.updateAllByemailID(userDetails, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
@@ -120,12 +132,14 @@ public class Controller {
 			{
 				System.out.println("Password Not Updated Validated ");
 			}
+			mongoClient.close();
 			return res;
 		} catch (Exception e) {
 			System.out.println("Error In controller");
 			e.printStackTrace();
 			res.setResponseCode("0");
 			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
 			return res;
 		}
 	}
@@ -133,9 +147,10 @@ public class Controller {
 	@RequestMapping("/UpdateStatus")
 	public Response updateStatus(@RequestParam(value = "emailID") String emailID) {
 		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
 		try {
 
-			MongoClient mongoClient = cm.createConnection();
+			
 			OTPUpdateInput oTPUpdateInput = new OTPUpdateInput(emailID);
 			res = up.updateStatusByemailID(oTPUpdateInput, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
@@ -146,12 +161,14 @@ public class Controller {
 			{
 				System.out.println("Status Not Updated ");
 			}
+			mongoClient.close();
 			return res;
 		} catch (Exception e) {
 			System.out.println("Error In controller");
 			e.printStackTrace();
 			res.setResponseCode("0");
 			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
 			return res;
 		}
 	}
@@ -161,9 +178,10 @@ public class Controller {
 			@RequestParam(value = "endLat" ) String endLat, @RequestParam(value = "endLong") String endLong,@RequestParam(value = "startLong") String startLong, @RequestParam(value = "id") String id) 
 			 {
 		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
 		try {
 
-			MongoClient mongoClient = cm.createConnection();
+			
 			S2Point startPoint = S2LatLng.fromDegrees(Double.parseDouble(startLat), Double.parseDouble(startLong)).toPoint();
 			S2Point endPoint = S2LatLng.fromDegrees(Double.parseDouble(endLat), Double.parseDouble(endLong)).toPoint();
 			UserDetailWithLocation userDetails = new UserDetailWithLocation(startPoint, endPoint, id, "Pending", Double.parseDouble(startLong), Double.parseDouble(startLat), Double.parseDouble(endLong), Double.parseDouble(endLat));
@@ -173,7 +191,7 @@ public class Controller {
 						
 					{
 						System.out.println("Inserted Susscessfully");
-			
+						mongoClient.close();
 			return res;
 		}
 		}catch (Exception e) {
@@ -181,14 +199,35 @@ public class Controller {
 			e.printStackTrace();
 			res.setResponseCode("0");
 			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
 			return res;
 		}
 		
 		
-		
+		mongoClient.close();
 		
 		return res;
 		
 }
+	
+	@RequestMapping("/check")
+	public String check() {
+	String hello="hello";
+		try {
+
+			
+			
+			return hello;
+		}
+		catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			
+			return hello;
+		}
+		
+}
+	
+	
 	
 }

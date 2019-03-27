@@ -29,7 +29,7 @@ public class Update {
 				System.out.println( li.emailID+ " User Valid");
 				res.setResponseCode("200");
 				res.setResponseMessage("UpdatedSuccessfull");
-			
+				
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class Update {
 				System.out.println( li.emailID+ " User Valid");
 				res.setResponseCode("200");
 				res.setResponseMessage("UpdatedSuccessfull");
-			
+				
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class Update {
 				System.out.println( li.getEmail()+ " Update Valid");
 				res.setResponseCode("200");
 				res.setResponseMessage("UpdatedSuccessfull");
-			
+				
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -32,6 +32,7 @@ public class Insert {
 			System.out.println("Document inserted successfully");
 			res.setResponseCode("200");
 			res.setResponseMessage("Inserted Successfully");
+			
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,6 +64,7 @@ public class Insert {
 			System.out.println("Document inserted successfully");
 			res.setResponseCode("200");
 			res.setResponseMessage("Inserted Successfully");
+			
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
