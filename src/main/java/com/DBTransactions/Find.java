@@ -91,12 +91,12 @@ public class Find {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
+			MongoCollection<Document> collection = database.getCollection("sampleCollection2");
 			System.out.println("Collection sampleCollection selected successfully");
 			BasicDBObject query = new BasicDBObject();
 			
 			query.put("emailID", li.getEmailID());
-			query.put("password", li.getPassword());
+			query.put("status", "MyPlan");
 			
 			FindIterable<Document> iterDoc = collection.find( query);
 
@@ -157,6 +157,65 @@ public class Find {
 				res.setResponseMessage("ValidateUnsuccessfull");
 			}
 			
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("InternalError");
+			return res;
+		}
+	}
+	
+	
+	public ResMyPlan findMyPlanInDBEmailID(String id, MongoClient mongoClient) {
+		ResMyPlan res = new ResMyPlan();
+		try {
+
+			MongoDatabase database = mongoClient.getDatabase("myNewDB");
+			MongoCollection<Document> collection = database.getCollection("sampleCollection2");
+			System.out.println("Collection sampleCollection selected successfully");
+			BasicDBObject query = new BasicDBObject();
+			
+			query.put("id", id);
+			query.put("type", "MyPlan");
+			query.put("status", "Pending");
+
+			
+			FindIterable<Document> iterDoc = collection.find( query);
+
+			Iterator it = iterDoc.iterator();
+
+			if (it.hasNext()) {
+				System.out.println("User PlanPresent");
+				res.setResponseCode("200");
+				res.setResponseMessage("PlanPresent");
+
+			} else {
+				res.setResponseCode("100");
+				res.setResponseMessage("NoPlan");
+				System.out.println("User No PlanPresent");
+			}
+int count=0;
+			it = iterDoc.iterator();
+			while (it.hasNext()) {
+				it.next();
+			count++;
+			}
+			Helper helper= new Helper();
+			MyPlan[] myplans=new MyPlan[count];
+			it = iterDoc.iterator();
+			count=0;
+			while (it.hasNext()) {
+				MyPlan myp=new MyPlan();
+				
+				String sos=it.next().toString();
+				System.out.println(sos);
+				myp=helper.myplanConerter(sos);
+				myplans[count]=myp;
+				count++;
+				
+			}
+			res.setMyplans(myplans);
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();

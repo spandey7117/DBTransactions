@@ -210,6 +210,74 @@ public class Controller {
 		
 }
 	
+	@RequestMapping("/InsertMyPlan")
+	public Response userDetailsEntryForPlan(@RequestParam(value = "startLat") String startLat,@RequestParam(value = "name") String name,@RequestParam(value = "startLoc") String startLoc,@RequestParam(value = "endLoc") String endLoc,
+			@RequestParam(value = "endLat" ) String endLat, @RequestParam(value = "endLong") String endLong,@RequestParam(value = "startLong") String startLong, @RequestParam(value = "id") String id,@RequestParam(value = "time") String time,@RequestParam(value = "preferedMode") String preferedMode,@RequestParam(value = "preferedSex") String preferedSex) 
+			 {
+		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
+		try {
+
+			MyPlan myPlan= new MyPlan(id, time, startLong, startLat, endLong, endLat, preferedMode, preferedSex,name,startLoc,endLoc);
+			res = ins.insertInMongoDBMyPlan(myPlan, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200"))
+						
+					{
+						System.out.println("Inserted Susscessfully");
+						mongoClient.close();
+			return res;
+		}
+		}catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
+			return res;
+		}
+		
+		
+		mongoClient.close();
+		
+		return res;
+		
+}
+	
+	
+	@RequestMapping("/FindMyPlan")
+	public ResMyPlan findMyPlan(@RequestParam(value = "id") String id ) {
+		ResMyPlan res = new ResMyPlan();
+		MongoClient mongoClient = cm.createConnection();
+		try {
+
+			res = find.findMyPlanInDBEmailID(id, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200"))
+						
+					{
+						System.out.println("Retrieved Susscessfully");
+						mongoClient.close();
+			return res;
+		}
+		}catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
+			return res;
+		}
+		
+		
+		mongoClient.close();
+		
+		return res;
+		
+}
+	
+	
+	
 	@RequestMapping("/check")
 	public String check() {
 	String hello="hello";
