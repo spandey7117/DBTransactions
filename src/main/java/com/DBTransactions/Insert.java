@@ -59,7 +59,7 @@ public class Insert {
 
 			Document document = new Document("endLatitude", userDetails.endLatitude).append("endLongitude", userDetails.endLongitude)
 					.append("id", userDetails.id)
-					.append("startLatitude", userDetails.startLatitude).append("status", "Pending").append("startLongitude", userDetails.startLongitude);
+					.append("startLatitude", userDetails.startLatitude).append("status", "Pending").append("startLongitude", userDetails.startLongitude).append("preferedSex", userDetails.preferedSex).append("preferedMode", userDetails.preferedMode);
 			collection.insertOne(document);
 			System.out.println("Document inserted successfully");
 			res.setResponseCode("200");

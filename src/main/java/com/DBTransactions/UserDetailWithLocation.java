@@ -9,10 +9,13 @@ String id;
 String status;
 double startLongitude;
 double startLatitude;
+
 double endLongitude;
 double endLatitude;
+String preferedSex;
+String preferedMode;
 public UserDetailWithLocation(S2Point startLocation, S2Point endLocation, String id, String status, double startLongitude,
-		double startLatitude, double endLongitude, double endLatitude) {
+		double startLatitude, double endLongitude, double endLatitude,String preferedSex,String preferedMode) {
 	super();
 	this.startLocation = startLocation;
 	this.endLocation = endLocation;
@@ -22,6 +25,8 @@ public UserDetailWithLocation(S2Point startLocation, S2Point endLocation, String
 	this.startLatitude = startLatitude;
 	this.endLongitude = endLongitude;
 	this.endLatitude = endLatitude;
+	this.preferedSex=preferedSex;
+	this.preferedMode=preferedMode;
 }
 public S2Point getStartLocation() {
 	return startLocation;
@@ -75,6 +80,17 @@ public void setEndLatitude(double endLatitude) {
 
 
 
-
+public String getPreferedSex() {
+	return preferedSex;
+}
+public void setPreferedSex(String preferedSex) {
+	this.preferedSex = preferedSex;
+}
+public String getPreferedMode() {
+	return preferedMode;
+}
+public void setPreferedMode(String preferedMode) {
+	this.preferedMode = preferedMode;
+}
 
 }

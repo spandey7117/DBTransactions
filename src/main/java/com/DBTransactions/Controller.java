@@ -175,7 +175,7 @@ public class Controller {
 	
 	@RequestMapping("/InsertLocData")
 	public Response userDetailsEntry(@RequestParam(value = "startLat") String startLat,
-			@RequestParam(value = "endLat" ) String endLat, @RequestParam(value = "endLong") String endLong,@RequestParam(value = "startLong") String startLong, @RequestParam(value = "id") String id) 
+			@RequestParam(value = "endLat" ) String endLat, @RequestParam(value = "endLong") String endLong,@RequestParam(value = "startLong") String startLong, @RequestParam(value = "id") String id,@RequestParam(value = "preferedMode") String preferedMode,@RequestParam(value = "preferedSex") String preferedSex) 
 			 {
 		Response res = new Response();
 		MongoClient mongoClient = cm.createConnection();
@@ -184,7 +184,7 @@ public class Controller {
 			
 			S2Point startPoint = S2LatLng.fromDegrees(Double.parseDouble(startLat), Double.parseDouble(startLong)).toPoint();
 			S2Point endPoint = S2LatLng.fromDegrees(Double.parseDouble(endLat), Double.parseDouble(endLong)).toPoint();
-			UserDetailWithLocation userDetails = new UserDetailWithLocation(startPoint, endPoint, id, "Pending", Double.parseDouble(startLong), Double.parseDouble(startLat), Double.parseDouble(endLong), Double.parseDouble(endLat));
+			UserDetailWithLocation userDetails = new UserDetailWithLocation(startPoint, endPoint, id, "Pending", Double.parseDouble(startLong), Double.parseDouble(startLat), Double.parseDouble(endLong), Double.parseDouble(endLat),preferedSex,preferedMode);
 			res = ins.insertInMongoDetailsLoc(userDetails, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
 			if (res.getResponseCode().equals("200"))
