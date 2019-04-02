@@ -90,4 +90,29 @@ public class Update {
 			return res;
 		}
 	}
+	public Response updateRatingByemailID(String id,String rating, MongoClient mongoClient) {
+		Response res = new Response();
+		try {
+
+			MongoDatabase database = mongoClient.getDatabase("myNewDB");
+			MongoCollection<Document> collection = database.getCollection("sampleCollection");
+			System.out.println("Collection sampleCollection selected successfully");
+				collection.updateOne(Filters.eq("emailID", id), Updates.set("rating", rating));
+
+			// Getting the iterator
+		
+				System.out.println( id+ " Update Valid");
+				res.setResponseCode("200");
+				res.setResponseMessage("UpdatedSuccessfull");
+				
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("InternalError");
+			return res;
+		}
+	}
+	
+	
 }

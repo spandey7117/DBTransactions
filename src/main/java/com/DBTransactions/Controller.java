@@ -24,7 +24,7 @@ public class Controller {
 		try {
 
 		
-			UserDetails userDetails = new UserDetails(name, phoneNumber, emailID, age, sex,password);
+			UserDetails userDetails = new UserDetails(name, phoneNumber, emailID, age, sex,password,"5");
 			res = find.findInDBPhoneNumber(userDetails, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
 			if (res.getResponseCode().equals("1001")) {
@@ -122,7 +122,7 @@ public class Controller {
 
 			
 
-			UserDetails userDetails = new UserDetails(name, phoneNumber, emailID, age, sex,"password");
+			UserDetails userDetails = new UserDetails(name, phoneNumber, emailID, age, sex,"password","");
 			res = up.updateAllByemailID(userDetails, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
 			if (res.getResponseCode().equals("200")) {
@@ -153,6 +153,35 @@ public class Controller {
 			
 			OTPUpdateInput oTPUpdateInput = new OTPUpdateInput(emailID);
 			res = up.updateStatusByemailID(oTPUpdateInput, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200")) {
+				System.out.println("Status updated Succesfully");
+			}
+			else
+			{
+				System.out.println("Status Not Updated ");
+			}
+			mongoClient.close();
+			return res;
+		} catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
+			return res;
+		}
+	}
+	
+	@RequestMapping("/UpdateRating")
+	public Response updateRating(@RequestParam(value = "emailID") String emailID, @RequestParam(value = "rating") String rating) {
+		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
+		try {
+
+			
+			
+			res = up.updateRatingByemailID(emailID,rating, mongoClient);
 			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
 			if (res.getResponseCode().equals("200")) {
 				System.out.println("Status updated Succesfully");

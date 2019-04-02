@@ -7,6 +7,15 @@ public class UserDetails {
 	String age;
 	String sex;
 	String password;
+	String rating;
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -55,7 +64,7 @@ public class UserDetails {
 		this.sex = sex;
 	}
 
-	public UserDetails(String name, String phoneNumber, String emailID, String age, String sex, String password) {
+	public UserDetails(String name, String phoneNumber, String emailID, String age, String sex, String password, String rating) {
 		super();
 		this.name = name;
 		this.phoneNumber = phoneNumber;
@@ -63,6 +72,7 @@ public class UserDetails {
 		this.age = age;
 		this.sex = sex;
 		this.password = password;
+		this.rating = rating;
 	}
 
 	
