@@ -64,6 +64,8 @@ public class UserDetails {
 		this.sex = sex;
 	}
 
+	public UserDetails() {
+	}
 	public UserDetails(String name, String phoneNumber, String emailID, String age, String sex, String password, String rating) {
 		super();
 		this.name = name;
@@ -74,7 +76,6 @@ public class UserDetails {
 		this.password = password;
 		this.rating = rating;
 	}
-
 	
 
 }

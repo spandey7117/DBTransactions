@@ -304,7 +304,30 @@ public class Controller {
 		return res;
 		
 }
-	
+	@RequestMapping("/FindMyDetails")
+	public UserDetails findInDBByEmailID(@RequestParam(value = "id") String id ) {
+		UserDetails res = new UserDetails();
+		MongoClient mongoClient = cm.createConnection();
+		try {
+
+			res = find.findInDBByEmailID(id, mongoClient);
+			mongoClient.close();
+			return res;
+			
+		}catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			
+			mongoClient.close();
+			return res;
+		}
+		
+		
+		
+		
+		
+		
+}
 	
 	
 	@RequestMapping("/check")

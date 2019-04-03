@@ -1,5 +1,6 @@
 package com.DBTransactions;
 
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -222,6 +223,36 @@ int count=0;
 			res.setResponseCode("0");
 			res.setResponseMessage("InternalError");
 			return res;
+		}
+	}
+	
+	
+	public UserDetails findInDBByEmailID(String id, MongoClient mongoClient) {
+		UserDetails user = new UserDetails();
+		try {
+
+			MongoDatabase database = mongoClient.getDatabase("myNewDB");
+			MongoCollection<Document> collection = database.getCollection("sampleCollection");
+			System.out.println("Collection UsersCollection selected successfully");
+
+			FindIterable<Document> iterDoc = collection.find(Filters.eq("emailID",id));
+			UserParser userParser= new UserParser();
+			// Getting the iterator
+			Iterator it = iterDoc.iterator();
+
+			if (it.hasNext()) {
+				System.out.println( id+ " email  exists");
+				user= userParser.parser(it.next().toString());
+			} else {
+				System.out.println( id + " email does not exists in db sampleCollection");
+				
+			}
+			
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			return user;
 		}
 	}
 }
