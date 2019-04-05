@@ -329,6 +329,38 @@ public class Controller {
 		
 }
 	
+	@RequestMapping("/FindPresent")
+	public Response findInDBEmailID2( @RequestParam(value = "id") String id
+			) {
+		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
+		try {
+
+			
+		
+			//res = find.findInDBEmailIDAndPassword(li, mongoClient);
+		res = find.findInDBEmailID2(id, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200")) {
+				System.out.println("User Validated Succesfully");
+			}
+			else
+			{
+				System.out.println("User Not Validated ");
+			}
+			mongoClient.close();
+			return res;
+		} catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
+			return res;
+		}
+	}
+	
+	
 	
 	@RequestMapping("/check")
 	public String check() {

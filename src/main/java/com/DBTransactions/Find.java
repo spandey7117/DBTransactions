@@ -28,8 +28,8 @@ public class Find {
 			// MongoClientURI("mongodb://admin:admin@cluster0-shard-00-00-2nifw.mongodb.net:27017,cluster0-shard-00-01-2nifw.mongodb.net:27017,cluster0-shard-00-02-2nifw.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true"));
 			// System.out.println("Connected Successfully");
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
 
 			FindIterable<Document> iterDoc = collection.find(Filters.eq("phoneNumber", userDetails.phoneNumber));
 
@@ -60,8 +60,8 @@ public class Find {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
 
 			FindIterable<Document> iterDoc = collection.find(Filters.eq("emailID", userDetails.emailID));
 
@@ -87,16 +87,48 @@ public class Find {
 		}
 	}
 
+	public Response findInDBEmailID2(String id, MongoClient mongoClient) {
+		Response res = new Response();
+		try {
+
+			MongoDatabase database = mongoClient.getDatabase("myNewDB");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
+
+			FindIterable<Document> iterDoc = collection.find(Filters.eq("id", id));
+
+			// Getting the iterator
+			Iterator it = iterDoc.iterator();
+
+			if (it.hasNext()) {
+				System.out.println( id+ " email already exists");
+				res.setResponseCode("101");
+				res.setResponseMessage("EmailIDAlreadyExists");
+			} else {
+				System.out.println( id + " email does not exists in db");
+				res.setResponseCode("1002");
+				res.setResponseMessage("emailIDDoesNotExistsInDB");
+			}
+			
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("InternalError");
+			return res;
+		}
+	}
+	
 	public Response findInDBEmailIDAndPassword(LoginInput li, MongoClient mongoClient) {
 		Response res = new Response();
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection2");
+			MongoCollection<Document> collection = database.getCollection("ASE_TestCollection");
 			System.out.println("Collection sampleCollection selected successfully");
 			BasicDBObject query = new BasicDBObject();
 			
-			query.put("emailID", li.getEmailID());
+			query.put("id", li.getEmailID());
 			query.put("status", "MyPlan");
 			
 			FindIterable<Document> iterDoc = collection.find( query);
@@ -128,8 +160,8 @@ public class Find {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
 			BasicDBObject query = new BasicDBObject();
 			
 			query.put("emailID", li.getEmailID());
@@ -173,8 +205,8 @@ public class Find {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection2");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("ASE_TestCollection");
+			System.out.println("Collection ASE_TestCollection selected successfully");
 			BasicDBObject query = new BasicDBObject();
 			
 			query.put("id", id);
@@ -232,8 +264,8 @@ int count=0;
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection UsersCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("ASE_TestCollection");
+			System.out.println("Collection ASE_TestCollection selected successfully");
 
 			FindIterable<Document> iterDoc = collection.find(Filters.eq("emailID",id));
 			UserParser userParser= new UserParser();

@@ -44,8 +44,8 @@ public class Update {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
 			Bson query = new Document().append("name", li.getName()).append("sex", li.getSex()).append("phoneNumber", li.getPhoneNumber());
 			
 			
@@ -72,8 +72,8 @@ public class Update {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
 				collection.updateOne(Filters.eq("emailID", li.getEmail()), Updates.set("status", "Active"));
 
 			// Getting the iterator
@@ -95,8 +95,8 @@ public class Update {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
 				collection.updateOne(Filters.eq("emailID", id), Updates.set("rating", rating));
 
 			// Getting the iterator

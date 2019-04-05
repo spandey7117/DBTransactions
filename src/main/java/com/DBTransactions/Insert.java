@@ -22,8 +22,8 @@ public class Insert {
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
 			// database.createCollection("sampleCollection1");
 			// System.out.println("Collection created successfully");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
 
 			Document document = new Document("name", userDetails.name).append("sex", userDetails.sex)
 					.append("phoneNumber", userDetails.phoneNumber).append("emailID", userDetails.emailID)
@@ -54,8 +54,8 @@ public class Insert {
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
 			// database.createCollection("sampleCollection1");
 			// System.out.println("Collection created successfully");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection2");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("ASE_TestCollection");
+			System.out.println("Collection ASE_TestCollection selected successfully");
 
 			Document document = new Document("endLatitude", userDetails.endLatitude).append("endLongitude", userDetails.endLongitude)
 					.append("id", userDetails.id)
@@ -84,8 +84,8 @@ public class Insert {
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
 			// database.createCollection("sampleCollection1");
 			// System.out.println("Collection created successfully");
-			MongoCollection<Document> collection = database.getCollection("sampleCollection2");
-			System.out.println("Collection sampleCollection selected successfully");
+			MongoCollection<Document> collection = database.getCollection("ASE_TestCollection");
+			System.out.println("Collection ASE_TestCollection selected successfully");
 
 			Document document = new Document("endLatitude", myPlan.endLat).append("endLongitude", myPlan.endLong).append("myPlanName", myPlan.myPlanName)
 					.append("id", myPlan.id)
