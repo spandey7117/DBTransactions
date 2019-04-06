@@ -67,6 +67,35 @@ public class Update {
 		}
 	}
 	
+	public Response updateAllByemailID2(UserDetailWithLocation userDetails, MongoClient mongoClient) {
+		Response res = new Response();
+		try {
+
+			MongoDatabase database = mongoClient.getDatabase("myNewDB");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			System.out.println("Collection UsersCollection selected successfully");
+			//Bson query = new Document().append("name", li.getName()).append("sex", li.getSex()).append("phoneNumber", li.getPhoneNumber());
+			
+			
+		//	updateQuery.put("$set", query);
+			collection.updateOne(Filters.eq("id", userDetails.id), Updates.combine(Updates.set("endLatitude", userDetails.endLatitude),Updates.set("endLongitude", userDetails.endLongitude),Updates.set("startLatitude", userDetails.startLatitude),Updates.set("status", "Pending"),Updates.set("startLongitude", userDetails.startLongitude),Updates.set("preferedSex", userDetails.preferedSex),Updates.set("preferedMode", userDetails.preferedMode)));
+
+			// Getting the iterator
+		
+				System.out.println( userDetails.id+ " User Valid");
+				res.setResponseCode("200");
+				res.setResponseMessage("UpdatedSuccessfull");
+				
+			return res;
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("InternalError");
+			return res;
+		}
+	}
+	
+	
 	public Response updateStatusByemailID(OTPUpdateInput li, MongoClient mongoClient) {
 		Response res = new Response();
 		try {

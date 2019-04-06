@@ -239,6 +239,43 @@ public class Controller {
 		
 }
 	
+	@RequestMapping("/UpdateLocData")
+	public Response updateAllByemailID2(@RequestParam(value = "startLat") String startLat,
+			@RequestParam(value = "endLat" ) String endLat, @RequestParam(value = "endLong") String endLong,@RequestParam(value = "startLong") String startLong, @RequestParam(value = "id") String id,@RequestParam(value = "preferedMode") String preferedMode,@RequestParam(value = "preferedSex") String preferedSex) 
+			 {
+		Response res = new Response();
+		MongoClient mongoClient = cm.createConnection();
+		try {
+
+			
+			S2Point startPoint = S2LatLng.fromDegrees(Double.parseDouble(startLat), Double.parseDouble(startLong)).toPoint();
+			S2Point endPoint = S2LatLng.fromDegrees(Double.parseDouble(endLat), Double.parseDouble(endLong)).toPoint();
+			UserDetailWithLocation userDetails = new UserDetailWithLocation(startPoint, endPoint, id, "Pending", Double.parseDouble(startLong), Double.parseDouble(startLat), Double.parseDouble(endLong), Double.parseDouble(endLat),preferedSex,preferedMode);
+			res = up.updateAllByemailID2(userDetails, mongoClient);
+			System.out.println("responsecode returned in findNumber: " + res.getResponseCode());
+			if (res.getResponseCode().equals("200"))
+						
+					{
+						System.out.println("Inserted Susscessfully");
+						mongoClient.close();
+			return res;
+		}
+		}catch (Exception e) {
+			System.out.println("Error In controller");
+			e.printStackTrace();
+			res.setResponseCode("0");
+			res.setResponseMessage("Internal Exception occured");
+			mongoClient.close();
+			return res;
+		}
+		
+		
+		mongoClient.close();
+		
+		return res;
+		
+}
+	
 	@RequestMapping("/InsertMyPlan")
 	public Response userDetailsEntryForPlan(@RequestParam(value = "startLat") String startLat,@RequestParam(value = "name") String name,@RequestParam(value = "startLoc") String startLoc,@RequestParam(value = "endLoc") String endLoc,
 			@RequestParam(value = "endLat" ) String endLat, @RequestParam(value = "endLong") String endLong,@RequestParam(value = "startLong") String startLong, @RequestParam(value = "id") String id,@RequestParam(value = "time") String time,@RequestParam(value = "preferedMode") String preferedMode,@RequestParam(value = "preferedSex") String preferedSex) 

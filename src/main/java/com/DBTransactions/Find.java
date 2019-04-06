@@ -92,7 +92,7 @@ public class Find {
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("UsersCollection");
+			MongoCollection<Document> collection = database.getCollection("ASE_TestCollection");
 			System.out.println("Collection UsersCollection selected successfully");
 
 			FindIterable<Document> iterDoc = collection.find(Filters.eq("id", id));
@@ -264,7 +264,7 @@ int count=0;
 		try {
 
 			MongoDatabase database = mongoClient.getDatabase("myNewDB");
-			MongoCollection<Document> collection = database.getCollection("ASE_TestCollection");
+			MongoCollection<Document> collection = database.getCollection("UsersCollection");
 			System.out.println("Collection ASE_TestCollection selected successfully");
 
 			FindIterable<Document> iterDoc = collection.find(Filters.eq("emailID",id));
